@@ -8,27 +8,27 @@ Smells chosen: Data Clumps, Primitive Obsession, Large Class
 Data Clumps Examples:
 `  
 
-class Crop extends Phaser.GameObjects.Sprite {  
+    class Crop extends Phaser.GameObjects.Sprite {  
 
-    constructor(scene, x, y, textureList, frame) {  
+        constructor(scene, x, y, textureList, frame) {  
 
-        super(scene, x, y, textureList[frame], null);  
+            super(scene, x, y, textureList[frame], null);  
 
-        this.stages = textureList;  
+            this.stages = textureList;  
 
-        this.scene = scene;  
+            this.scene = scene;  
 
-        scene.add.existing(this);
-        return this;
-    }
-    remove() {
-        this.destroy();
-    }
-}`
+            scene.add.existing(this);
+            return this;
+        }
+        remove() {
+            this.destroy();
+        }
+    }`
 
 `  
 
-addCropSprite(u, v) {  
+    addCropSprite(u, v) {  
 
         let newCrop = new Crop(this, u * this.tileWidth + this.tileWidth / 2, 
             v * this.tileHeight + this.tileHeight * 3 / 4, plantTypes[1].growthFrames, 0);  
