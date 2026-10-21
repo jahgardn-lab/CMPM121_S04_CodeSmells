@@ -16,7 +16,7 @@ Data Clumps Examples:
         this.stages = textureList;  
 
         this.scene = scene;  
-        
+
         scene.add.existing(this);
         return this;
     }
@@ -25,11 +25,17 @@ Data Clumps Examples:
     }
 }`
 
-`addCropSprite(u, v) {
+`addCropSprite(u, v) {  
+
         let newCrop = new Crop(this, u * this.tileWidth + this.tileWidth / 2, 
-            v * this.tileHeight + this.tileHeight * 3 / 4, plantTypes[1].growthFrames, 0);
-        let plantScale = (this.tileWidth) / (newCrop.width * 2);
-        newCrop.setScale(plantScale, plantScale);
-        newCrop.setVisible(false);
-        this.cropSprites[[u,v].toString()] = newCrop;
+            v * this.tileHeight + this.tileHeight * 3 / 4, plantTypes[1].growthFrames, 0);  
+
+        let plantScale = (this.tileWidth) / (newCrop.width * 2);  
+
+        newCrop.setScale(plantScale, plantScale);  
+
+        newCrop.setVisible(false);  
+
+        this.cropSprites[[u,v].toString()] = newCrop;  
+        
     }`
