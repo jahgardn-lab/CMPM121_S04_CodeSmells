@@ -12,11 +12,9 @@ Data Clumps Examples:
         super(scene, x, y, textureList[frame], null);
         this.stages = textureList;
         this.scene = scene;
-
         scene.add.existing(this);
         return this;
     }
-
     remove() {
         this.destroy();
     }
@@ -25,7 +23,6 @@ Data Clumps Examples:
 `addCropSprite(u, v) {
         let newCrop = new Crop(this, u * this.tileWidth + this.tileWidth / 2, 
             v * this.tileHeight + this.tileHeight * 3 / 4, plantTypes[1].growthFrames, 0);
-            
         let plantScale = (this.tileWidth) / (newCrop.width * 2);
         newCrop.setScale(plantScale, plantScale);
         newCrop.setVisible(false);
