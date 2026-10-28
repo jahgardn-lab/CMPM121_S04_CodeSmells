@@ -184,3 +184,7 @@ with Subclasses (362)**. You may also have to apply other kinds of refactoring t
 
 ### Example 1 (Javascript):
 
+![picture showing class TestNight with 739 lines](/Screenshot 2026-10-27 173650.png)
+![picture showing how many night classes exist is the sample project](/CMPM121_S04_CodeSmells
+/Screenshot 2026-10-27 180158.png)
+
