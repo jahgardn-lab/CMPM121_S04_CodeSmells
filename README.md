@@ -273,39 +273,198 @@ By pulling out some behaviors using **Extract Function (106).**, including the c
 
 However, to lose the repeated code in each night we can create one base class out of the TestNight code. I called this class nightBase in my example. Then we can just call each function from the base class. Things that vary from night to night are held in a JSON file which we could create an object for and pass into the functions where necessary. This creates one night class of 678 lines (which could probably be further reduces if I understood what Phaser allows) and all the rest of the nights only have 36 lines
 
-    class nightTwo extends nightBase{
-    constructor() {
-        super("nightTwoScene");
-    }
+        class nightTwo extends nightBase{
+        constructor() {
+            super("nightTwoScene");
+        }
 
-    init() {
-        //initaling all the variables from nightBase class
-        this.init();
-    }
+        init() {
+            //initaling all the variables from nightBase class
+            this.init();
+        }
 
-    create() {
-        //creating all the objects from nightBase class
-        this.enemyD = this.cache.json.get('enemiesNight2');
-        this.create(enemyD)
-    }
+        create() {
+            //creating all the objects from nightBase class
+            this.enemyD = this.cache.json.get('enemiesNight2');
+            this.create(enemyD)
+        }
 
-    update(time, delta) {
-        this.update(time, delta);
+        update(time, delta) {
+            this.update(time, delta);
         
+        }
+
+        updatePower() {
+            this.updatePower();
+        }
+
+        // called when 6 AM is reached
+        hasWon() {
+            this.hasWon();
+        }
+
+        // creates new button sprite and adds it to buttons
+        createCamButton(x, y, sprite, scale) {
+            this.createCamButton(x, y, sprite, scale);
+        }
+    }
+    
+
+
+### Example 2 (Java):
+
+    package gameoflife;
+
+    import java.awt.Color;
+    import java.awt.Graphics;
+
+    public class Game extends Life{
+	
+	    Life[][] gameboard;
+	    int state;
+	    int alive = 0;
+	    //Graphics g;
+	
+	Game(int state, int r, int c){
+		    super(state);
+		    this.state = state;
+		    gameboard=new Life[r][c];
+        for(int j=0;j<gameboard.length;j++) {
+    	    for(int k=0;k<gameboard[0].length;k++){
+    		    double col=Math.random();double sh=Math.random();
+    		    if(col<=.4&&sh<=.6) {gameboard[j][k]=new Life(1);}
+    		    if(col<=.4&&sh>.6) {gameboard[j][k]=new Life(1);}
+    		    if(col>.4&&sh<=.6) {gameboard[j][k]=new Life(0);}
+    		    if(col>.4&&sh>.6) {gameboard[j][k]=new Life(0);}
+    		}
+    	}
+	}
+	
+	public void prtBoard() {
+		for(int j=0;j<gameboard.length;j++) {
+			for(int k=0;k<gameboard[0].length;k++) {
+				if(gameboard[j][k].state==1) {System.out.print("1 ");}
+				else if(gameboard[j][k].state==0) {System.out.print("0 ");}
+			}	
+			System.out.println("");
+		}
+	}
+	
+	 void paintBoard(int len, Graphics g) {
+	  	  for(int j=0;j<this.gameboard.length;j++) {
+	  		  for(int k=0;k<this.gameboard[0].length;k++) {
+	  			  gameboard[j][k].draw(j,k,len,g);
+	  		  }
+	  	  }
+	}
+	
+	public void playGame() {
+		for(int j=1;j<gameboard.length-1;j++) {
+			for(int k=1;k<gameboard[0].length-1;k++) {
+			if(gameboard[j-1][k-1].state==1) {alive++;}
+			if(gameboard[j-1][k].state==1) {alive++;}
+			if(gameboard[j-1][k+1].state==1) {alive++;}
+			if(gameboard[j][k-1].state==1) {alive++;}
+			if(gameboard[j][k+1].state==1) {alive++;}
+			if(gameboard[j+1][k-1].state==1) {alive++;}
+			if(gameboard[j+1][k].state==1) {alive++;}
+			if(gameboard[j+1][k+1].state==1) {alive++;}
+			
+			    if(alive>3 && gameboard[j][k].state==1) {gameboard[j][k] = new Life(0);alive--;}
+			    else if(alive<2 && gameboard[j][k].state==1) {gameboard[j][k] = new Life(0);alive--;}
+			    else if(alive==3 && gameboard[j][k].state==0) {gameboard[j][k] = new Life(1); alive++;}
+			    alive = 0;
+			}
+		}
+		}
+	
+	    public static void main(String args[]) {
+		    Game g1 = new Game(0,10,10);
+		    g1.prtBoard();
+		    g1.playGame();
+		    System.out.println("");
+		    System.out.println("");
+	    }
     }
 
-    updatePower() {
-        this.updatePower();
+In this example the game board is being printed in the same class as the gameplay takes place in. 
+
+    package gameoflife;
+
+    import java.awt.Color;
+    import java.awt.Graphics;
+    import gameoflife.Play;
+    import gameoflife.Board;
+
+    public class Game extends Life{
+	
+	    Life[][] gameboard;
+	    int state;
+	    int alive = 0;
+	    //Graphics g;
+	
+	Game(int state, int r, int c){
+		    super(state);
+		    this.state = state;
+		    gameboard=new Life[r][c];
+        for(int j=0;j<gameboard.length;j++) {
+    	    for(int k=0;k<gameboard[0].length;k++){
+    		    double col=Math.random();double sh=Math.random();
+    		    if(col<=.4&&sh<=.6) {gameboard[j][k]=new Life(1);}
+    		    if(col<=.4&&sh>.6) {gameboard[j][k]=new Life(1);}
+    		    if(col>.4&&sh<=.6) {gameboard[j][k]=new Life(0);}
+    		    if(col>.4&&sh>.6) {gameboard[j][k]=new Life(0);}
+    		}
+    	}
+	}
+	
+	    public static void main(String args[]) {
+		    Game  g1 = new Game(0,10,10);
+		    prtBoard(g1);
+		    playGame(g1);
+	        System.out.println("");
+	        System.out.println("");
+	    }
     }
 
-    // called when 6 AM is reached
-    hasWon() {
-        this.hasWon();
+To refactor this I use **Extract Class (182)** to separate the print behaviors and the play behaviors. Those classes hold the same behaviors as before but not take a game object. Also upon further inspect the method paintBoard() was not being utilized so it can be removed from the class.
+
+     package gameoflife;
+
+    import java.awt.Color;
+    import java.awt.Graphics;
+
+     public class Play extends Life{
+
+     gameBoard = Life[][];
+
+     Play(Game g){
+         this.gameboard = g.gameBoard;
+     }
+
+     public void playGame() {
+		for(int j=1;j<gameboard.length-1;j++) {
+			for(int k=1;k<gameboard[0].length-1;k++) {
+			if(gameboard[j-1][k-1].state==1) {alive++;}
+			if(gameboard[j-1][k].state==1) {alive++;}
+			if(gameboard[j-1][k+1].state==1) {alive++;}
+			if(gameboard[j][k-1].state==1) {alive++;}
+			if(gameboard[j][k+1].state==1) {alive++;}
+			if(gameboard[j+1][k-1].state==1) {alive++;}
+			if(gameboard[j+1][k].state==1) {alive++;}
+			if(gameboard[j+1][k+1].state==1) {alive++;}
+			
+			    if(alive>3 && gameboard[j][k].state==1) {gameboard[j][k] = new Life(0);alive--;}
+			    else if(alive<2 && gameboard[j][k].state==1) {gameboard[j][k] = new Life(0);alive--;}
+			    else if(alive==3 && gameboard[j][k].state==0) {gameboard[j][k] = new Life(1); alive++;}
+			    alive = 0;
+			}
+		}
+	}
     }
 
-    // creates new button sprite and adds it to buttons
-    createCamButton(x, y, sprite, scale) {
-        this.createCamButton(x, y, sprite, scale);
-    }
-}
+This new version of the play class would look something like this. The board class would function in the same way just handling the printing behavior.
+
+
+
 
