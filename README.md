@@ -2,7 +2,7 @@
 
 Jade Gardner, Cassidy Croy-Perrett, Trinity Willis
 
-Smells chosen: Data Clumps, Primitive Obsession, Large Class
+Smells chosen: Data Clumps (Cassidy), Primitive Obsession (Trinity), Large Class (Jade)
 
 # Data Clumps
 
