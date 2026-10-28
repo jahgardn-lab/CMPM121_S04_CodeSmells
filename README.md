@@ -12,7 +12,10 @@ Data Clumps refer to a means of ineffienciently passing data between functions, 
 ## Refactoring
 Data Clumps may be refactored through the bundling related pieces of data (whose usage often goes together in the program) under a single, more comprehensive class object. For example, instead of passing around an objects x, y and z coordinates in a 3D space around seperately, grouping them together into a singular "position" class object (where the variables can be referred to as position.x, position.y and position.z respectivly), and passing that object to related functions, can increase the ease and speed that functions may be written that involve passing these pieces of data from function to function.
 
-Data Clumps Examples:
+### Javasscript Example:
+
+Listed below is an excerpt of code that I wrote for a project in a precious course. This Simulation involved the growing of different types of plants within a grassy field, containing both a location within the world and a position of the plant's current sprite within the spritesheet. Note the rather chaotic and un-sightreadable calling of the new Crop() constructor within the addCropSprite() function.
+
 
     class Crop extends Phaser.GameObjects.Sprite {  
 
@@ -37,17 +40,39 @@ Data Clumps Examples:
 
         let newCrop = new Crop(this, u * this.tileWidth + this.tileWidth / 2, 
             v * this.tileHeight + this.tileHeight * 3 / 4, plantTypes[1].growthFrames, 0);  
-
-        let plantScale = (this.tileWidth) / (newCrop.width * 2);  
-
-        newCrop.setScale(plantScale, plantScale);  
-
-        newCrop.setVisible(false);  
-
-        this.cropSprites[[u,v].toString()] = newCrop;  
-
     }
 
+We may refactor this code through the bundling of related datatypes together, creating aptly labeled objects to contain them.
+
+class Crop extends Phaser.GameObjects.Sprite {  
+
+        constructor(scene, position, spritesheet) {  
+
+            super(scene, position.x, position.y, spritesheet.textureList[spritesheet.frame], null);  
+
+            this.stages = spritesheet.textureList;  
+
+            this.scene = scene;  
+
+            scene.add.existing(this);
+            return this;
+        }
+        remove() {
+            this.destroy();
+        }
+    }
+  
+
+    addCropSprite(u, v) {  
+        let position = {x: u * this.tileWidth + this.tileWidth / 2, 
+        y: v * this.tileHeight + this.tileHeight * 3 / 4};
+
+        let spritesheet = {texturelist: plantTypes[1].growthFrames, frame: 0}
+
+        let newCrop = new Crop(this, position, spritesheet);  
+    }
+
+With this refactoring, it is much easier to read the function and form of the Crop constructor, and build new callings of this function in different circumstances at a moment's notice.
 
 # Primitive Obsession
 
