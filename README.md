@@ -44,7 +44,7 @@ Listed below is an excerpt of code that I wrote for a project in a precious cour
 
 We may refactor this code through the bundling of related datatypes together, creating aptly labeled objects to contain them.
 
-class Crop extends Phaser.GameObjects.Sprite {  
+    class Crop extends Phaser.GameObjects.Sprite {  
 
         constructor(scene, position, spritesheet) {  
 
@@ -101,8 +101,7 @@ Detailed here is a section of code that I wrote for a previous Unity-based game 
 
 While manually toggling each individual component of the genades blast (it's sprite, script and collider objects) work, it is not sight-readable and clogs up the code. By seperating these specific aspects of the blast gameobject to be under a child gameobject, these specific behaviors can be more easily accessed by a singular command.
 
-private IEnumerator Boom()
-    {
+    private IEnumerator Boom(){
         gameObject.GetComponent<SpriteRenderer>().enabled = false;
         blastChild.GetComponent<BlastCode>().startExploding();
         gameObject.GetComponent<AudioSource>().Play();
