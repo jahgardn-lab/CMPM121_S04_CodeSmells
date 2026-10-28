@@ -169,3 +169,18 @@ After Replace Type Code with Subclasses and Replace Conditional with Polymorphis
         console.log(employee.calculatePay()); // 300
 
 Here, the Employee class becomes a parent class for new subclasses RegularEmployee and OvertimeEmployee. Each subclass has the function calculatePay() which runs the corresponding pay calculation for each type of employee.
+
+
+
+
+# Large Class
+
+Large class code smell is similar to other smells like large function. When a class gets large there is often repeated code or too many ideas shoved into one class.
+
+## Refactoring
+
+Fowler suggests a couple different refactoring method for large class. You can **Extract Class (182)** to bundle specific variables and methods together. If your class could use inheritance you can also use **Extract Superclass (375)** or you can replace some code with a subclass and use **Replace Type Code
+with Subclasses (362)**. You may also have to apply other kinds of refactoring that might be related to smells like Large Functions or other similar smells that might contribute to the size of your class.
+
+### Example 1 (Javascript):
+
