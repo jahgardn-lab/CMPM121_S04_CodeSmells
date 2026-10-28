@@ -4,6 +4,13 @@ Jade Gardner, Cassidy Croy-Perrett, Trinity Willis
 
 Smells chosen: Data Clumps, Primitive Obsession, Large Class
 
+# Data Clumps
+
+## Introduction
+Data Clumps refer to a means of ineffienciently passing data between functions, with related items being often sent to the same places without being properly grouped together under a singular hood. This can lead to code that is increasingly difficult to read and write (for example, should a function have an exroadinary amount of required inputs, it may be a hassle keeping straight which similar & related piece of data goes into what order.) Not to 
+
+## Refactoring
+Data Clumps may be refactored through the bundling related pieces of data (whose usage often goes together in the program) under a single, more comprehensive class object. For example, instead of passing around an objects x, y and z coordinates in a 3D space around seperately, grouping them together into a singular "position" class object (where the variables can be referred to as position.x, position.y and position.z respectivly), and passing that object to related functions, can increase the ease and speed that functions may be written that involve passing these pieces of data from function to function.
 
 Data Clumps Examples:
 
