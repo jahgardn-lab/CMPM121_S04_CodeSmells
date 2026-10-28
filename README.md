@@ -12,7 +12,7 @@ Data Clumps refer to a means of ineffienciently passing data between functions, 
 ## Refactoring
 Data Clumps may be refactored through the bundling related pieces of data (whose usage often goes together in the program) under a single, more comprehensive class object. For example, instead of passing around an objects x, y and z coordinates in a 3D space around seperately, grouping them together into a singular "position" class object (where the variables can be referred to as position.x, position.y and position.z respectivly), and passing that object to related functions, can increase the ease and speed that functions may be written that involve passing these pieces of data from function to function.
 
-### Javasscript Example:
+### Javascript (Phaser) Example:
 
 Listed below is an excerpt of code that I wrote for a project in a precious course. This Simulation involved the growing of different types of plants within a grassy field, containing both a location within the world and a position of the plant's current sprite within the spritesheet. Note the rather chaotic and un-sightreadable calling of the new Crop() constructor within the addCropSprite() function.
 
@@ -73,6 +73,53 @@ class Crop extends Phaser.GameObjects.Sprite {
     }
 
 With this refactoring, it is much easier to read the function and form of the Crop constructor, and build new callings of this function in different circumstances at a moment's notice.
+
+### C-Sharp (Unity) Example:
+Detailed here is a section of code that I wrote for a previous Unity-based game project. WHile Unity's gameobject system does a fine job automatically grouping related components, data clumps can still form within the database if not careful. In this specific project, the gameplay was based on the spawning and aiming of genade objects, the resulting explosion launching the player to complete platforming challenges and knocking out enemies. Below is an Ienumerator (function that completes it's task over time) that handled the animation and physics of the grendate's explosion.
+
+     private IEnumerator Boom()
+    {
+        gameObject.GetComponent<SpriteRenderer>().enabled = false;
+        blast.GetComponent<Blast>().enabled = true;
+        blast.GetComponent<SpriteRenderer>().enabled = true;
+        blast.GetComponent<Collider2D>().enabled = true;
+        gameObject.GetComponent<AudioSource>().Play();
+        yield return new WaitForSeconds(0.5f);
+
+        //time deference between "appearing" deleted and being deleted for grenade refill delay
+        blast.GetComponent<Blast>().enabled = false;
+        blast.GetComponent<SpriteRenderer>().enabled = false;
+        blast.GetComponent<Collider2D>().enabled = false;
+        transform.Find("Canvas").gameObject.SetActive(false);
+        gameObject.GetComponent<SpriteRenderer>().enabled = false;
+        gameObject.GetComponent<Collider2D>().enabled = false;
+
+        yield return new WaitForSeconds(0.1f);
+        GameObject.Find("Player").GetComponent<Player_Move>().grenades -= 1;
+        //Destroy(gameObject);
+    }
+
+While manually toggling each individual component of the genades blast (it's sprite, script and collider objects) work, it is not sight-readable and clogs up the code. By seperating these specific aspects of the blast gameobject to be under a child gameobject, these specific behaviors can be more easily accessed by a singular command.
+
+private IEnumerator Boom()
+    {
+        gameObject.GetComponent<SpriteRenderer>().enabled = false;
+        blastChild.GetComponent<BlastCode>().startExploding();
+        gameObject.GetComponent<AudioSource>().Play();
+        yield return new WaitForSeconds(0.5f);
+
+        //time deference between "appearing" deleted and being deleted for grenade refill delay
+        blastChild.GetComponent<BlastCode>().stopExploding();
+        transform.Find("Canvas").gameObject.SetActive(false);
+        gameObject.GetComponent<SpriteRenderer>().enabled = false;
+        gameObject.GetComponent<Collider2D>().enabled = false;
+
+        yield return new WaitForSeconds(0.1f);
+        GameObject.Find("Player").GetComponent<Player_Move>().grenades -= 1;
+        //Destroy(gameObject);
+    }
+
+By grouping those aspects of the origional gameobject under a seperate child  with it's own script, these particular functions can be more easily accessed and enabled on command all together.
 
 # Primitive Obsession
 
