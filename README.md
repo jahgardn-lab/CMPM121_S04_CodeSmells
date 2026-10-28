@@ -187,8 +187,10 @@ with Subclasses (362)**. You may also have to apply other kinds of refactoring t
 ![picture showing class TestNight with 739 lines](/images/longTestNightClass.png)
 Here is an example of a very long class from my final project in CMPM 121. With the use of Phaser it is a bit hard to use some of Fowler's refactoring methods as described.
 ![picture showing how many night classes exist is the sample project](/images/multipleNights.png)
-However, the same bas night class gets used repeatedly so it makes sense to refactor this.
+However, the same basic idea of a night class gets used repeatedly so it makes sense to refactor this.
 
+
+![picture showing TestNight refactored down to 678 lines](/images/refactoredTestNight.png)
 By pulling out some behaviors using **Extract Function (106).**, including the creation of door objects as depicted here, I can refactor the class down to 678 lines.
 
 However, to lose the repeated code in each night we can create one base class out of the TestNight code. I called this class nightBase in my example. Then we can just call each function from the base class. Things that vary from night to night are held in a JSON file which we could create an object for and pass into the functions where necessary. This creates one night class of 678 lines (which could probably be further reduces if I understood what Phaser allows) and all the rest of the nights only have 36 lines
